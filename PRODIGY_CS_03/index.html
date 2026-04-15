@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Password Strength Checker</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: linear-gradient(to right, #1e3c72, #2a5298);
+    color: white;
+    text-align: center;
+    padding: 50px;
+}
+
+.container {
+    background: rgba(0,0,0,0.4);
+    padding: 30px;
+    border-radius: 15px;
+    width: 350px;
+    margin: auto;
+}
+
+input {
+    width: 90%;
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 5px;
+    border: none;
+}
+
+button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: none;
+    background: #00c6ff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#strength {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.progress {
+    height: 10px;
+    width: 100%;
+    background: #ccc;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.progress-bar {
+    height: 10px;
+    width: 0%;
+    border-radius: 5px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Password Strength Checker</h2>
+
+    <input type="password" id="password" placeholder="Enter Password">
+    <br>
+    <button onclick="checkStrength()">Check Strength</button>
+
+    <div class="progress">
+        <div class="progress-bar" id="bar"></div>
+    </div>
+
+    <div id="strength"></div>
+</div>
+
+<script>
+function checkStrength() {
+    let password = document.getElementById("password").value;
+    let strengthText = document.getElementById("strength");
+    let bar = document.getElementById("bar");
+
+    let score = 0;
+
+    if (password.length >= 8) score++;
+    if (/[A-Z]/.test(password)) score++;
+    if (/[a-z]/.test(password)) score++;
+    if (/[0-9]/.test(password)) score++;
+    if (/[^A-Za-z0-9]/.test(password)) score++;
+
+    if (score <= 2) {
+        strengthText.innerHTML = "Weak ❌";
+        bar.style.width = "33%";
+        bar.style.background = "red";
+    } 
+    else if (score == 3 || score == 4) {
+        strengthText.innerHTML = "Medium ⚠️";
+        bar.style.width = "66%";
+        bar.style.background = "orange";
+    } 
+    else {
+        strengthText.innerHTML = "Strong ✅";
+        bar.style.width = "100%";
+        bar.style.background = "green";
+    }
+}
+</script>
+
+</body>
+</html>
